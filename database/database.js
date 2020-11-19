@@ -1,26 +1,56 @@
-const mysql = require('mysql');
+const { Pool } = require('pg')
 
-var pool = mysql.createPool({
-    connectionLimit: 10,
+const pool = new Pool({
+
     host: 'localhost',
-    user: 'root',
-    password: 'password',
-    database: 'covid_db',
-    port: 3306,
-
+    database: 'postgres',
+    user: 'postgres',
+    password: '1928',
+    port: 5432,
 });
 
-async function getData(callback) {
+async function getConfirmed() {
+    const sql = `SELECT Lat,Long,"Country/Region" as Country,"Province/State" as Province,"3/23/20" as Confirmed FROM db_confirmed_csv`;
 
-    const lat = 'SELECT `Lat`,`Long`,`Country/Region`,`Province/State`,`3/23/20` FROM confirmed_db';
-    await pool.query(lat, function(error, results, fields) {
-        try {
-            return callback(results)
-        } catch (error) {
-            console.log(error);
-        }
-    });
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
 
 }
 
-module.exports = { getData }
+async function getDeath() {
+    const sql = `SELECT Lat,Long,"Country/Region" as Country,"Province/State" as Province,"3/23/20" as Death FROM db_death_csv`;
+
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+
+}
+
+async function getRecovered() {
+    const sql = `SELECT Lat,Long,"Country/Region" as Country,"Province/State" as Province,"3/23/20" as Death FROM db_death_csv`;
+
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+
+}
+
+
+module.exports = {
+    getConfirmed,
+    getDeath,
+    getRecovered
+}

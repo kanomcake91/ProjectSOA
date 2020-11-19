@@ -9,11 +9,13 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+
+    <link rel="stylesheet" href="stylesheets/map.css">
 </head>
 
 <body>
-    <div class="container">
+    <!-- <div class="container">
         <table class="table">
             <thead>
                 <tr>
@@ -21,7 +23,7 @@
                     <th>Long</th>
                     <th>Country</th>
                     <th>Province</th>
-                    <th>3/23/20</th>
+                    <th>Confirmed</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,21 +31,77 @@
                 <% confirmed.forEach(function(data){ %>
                     <tr>
                         <td scope="row">
-                            <%=data.Lat%>
+                            <%=data.lat%>
                         </td>
                         <td>
-                            <%=data.Long%>
+                            <%=data.long%>
                         </td>
+                        <td>
+                            <%=data.country%>
+                        </td>
+                        <td>
+                            <%=data.province%>
+                        </td>
+                        <td>
+                            <%=data.confirmed%>
+                        </td>
+
                     </tr>
                     <% }); %>
+                        <% death.forEach(function(data){ %>
+                            <tr>
+                                <td scope="row">
+                                    <%=data.lat%>
+                                </td>
+                                <td>
+                                    <%=data.long%>
+                                </td>
+                                <td>
+                                    <%=data.country%>
+                                </td>
+                                <td>
+                                    <%=data.province%>
+                                </td>
+                                <td>
+                                    <%=data.death%>
+                                </td>
+
+                            </tr>
+                            <% }); %>
+
             </tbody>
         </table>
+    </div> -->
+    <div class="container">
+        <div id="mapid"></div>
+
+        <div>
+
+
+
+        </div>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+    <script src="javascripts/map.js"></script>
+    <script>
+        var map = L.map('mapid').setView([0, 0], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    </script>
+    <% latitude.forEach(function(data){ %>
+        <script>
+            L.marker([parseFloat('<%=data.lat%>'), parseFloat('<%=data.long%>')]).addTo(map)
+                .bindPopup(('<%=data.country%>'))
+                .openPopup();
+        </script>
+        <% }); %>
 </body>
 
 </html>
