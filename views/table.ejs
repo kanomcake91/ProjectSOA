@@ -6,9 +6,11 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="stylesheets/font.css">
     <link rel="stylesheet" href="stylesheets/navbar.css">
 </head>
 
@@ -21,24 +23,17 @@
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item ">
-                    <a class="nav-link" href="/">World Map </span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="confirmed">Confirmed</a>
+                    <a class="nav-link" href="/">World Map </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="death">Death<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/table"><span class="sr-only">(current)</span>Countries Table</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="recovered">Recovered</a>
-                </li>
-
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ranking</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ranking  </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownId">
-                        <a class="dropdown-item" href="graphConfirmed">Confirmed</a>
-                        <a class="dropdown-item" href="graphDeath">Death</a>
-                        <a class="dropdown-item" href="graphRecovered">Recovered</a>
+                        <a class="dropdown-item" href="/graphConfirmed">Confirmed</a>
+                        <a class="dropdown-item" href="/graphDeath">Death</a>
+                        <a class="dropdown-item" href="/graphRecovered">Recovered</a>
                     </div>
                 </li>
             </ul>
@@ -49,29 +44,47 @@
         </div>
     </nav>
     <div class="container mt-5">
-        <table class="table" id="tableDeath">
+        <div class="graphPageTitle text-center">
+            Covid-19 Countries Table</div>
+        <table class="table" id="tableConfirmed">
             <thead>
                 <tr>
                     <th>State</th>
                     <th>Country</th>
+                    <th>Confirmed</th>
                     <th>Death</th>
+                    <th>Recovered</th>
                 </tr>
             </thead>
             <tbody id="showData">
 
-                <% death.forEach(function(data){ %>
+                <% confirmed.forEach(function(data){ %>
                     <tr>
                         <td>
                             <%=data.state%>
                         </td>
-                        <td scope="row">
-                            <a href="/death/dataDeath/<%=data.country%>">
-                                <%=data.country%>
-                            </a>
-                        </td>
-                        <td>
-                            <%=data.death%>
-                        </td>
+                        <% if(data.state != ''){%>
+                            <td scope="row">
+                                <a href="/country/<%=data.state%>/<%=data.country%>">
+                                    <%=data.country%>
+                                </a>
+                            </td>
+                            <% } else { %>
+                                <td scope="row">
+                                    <a href="/country/null/<%=data.country%>">
+                                        <%=data.country%>
+                                    </a>
+                                </td>
+                                <%}%>
+                                    <td>
+                                        <%=data.confirmed%>
+                                    </td>
+                                    <td>
+                                        <%=data.death%>
+                                    </td>
+                                    <td>
+                                        <%=data.recovered%>
+                                    </td>
                     </tr>
                     <% }); %>
 

@@ -30,21 +30,14 @@
                     <a class="nav-link" href="/">World Map <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="confirmed">Confirmed</a>
+                    <a class="nav-link" href="/table">Countries Table</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="death">Death</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="recovered">Recovered</a>
-                </li>
-
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ranking</a>
                     <div class="dropdown-menu" aria-labelledby="dropdownId">
-                        <a class="dropdown-item" href="graphConfirmed">Confirmed </a>
-                        <a class="dropdown-item" href="graphDeath">Death</a>
-                        <a class="dropdown-item" href="graphRecovered">Recovered </a>
+                        <a class="dropdown-item" href="/graphConfirmed">Confirmed</a>
+                        <a class="dropdown-item" href="/graphDeath">Death</a>
+                        <a class="dropdown-item" href="/graphRecovered">Recovered</a>
                     </div>
                 </li>
             </ul>
@@ -123,16 +116,20 @@
                 popupAnchor: [1, -34],
                 shadowSize: [41, 41]
             });
-            var markers = [
-                ["<b style='font-size:15pt;'> <%=data.country%> </b> <br> <i style='font-size:12pt;'>Confirmed : <%=data.confirmed%> </i>", ('<%=data.lat%>'), ('<%=data.long%>')],
-            ];
-            for (var i = 0; i < markers.length; i++) {
-                marker = L.marker([markers[i][1], markers[i][2]], {
-                        icon: goldIcon
-                    })
-                    .bindPopup(markers[i][0])
-                    .openPopup()
-                    .addTo(map);
+            if ('<%=data.confirmed%>' == '') {
+                var marker = []
+            } else {
+                var markers = [
+                    ["<b style='font-size:15pt;'> <%=data.country%> </b> <br><b style='font-size:12pt;'> <%=data.state%> </b> <br> <i style='font-size:12pt;'>Confirmed : <%=data.confirmed%> </i>", ('<%=data.lat%>'), ('<%=data.long%>')],
+                ];
+                for (var i = 0; i < markers.length; i++) {
+                    marker = L.marker([markers[i][1], markers[i][2]], {
+                            icon: goldIcon
+                        })
+                        .bindPopup(markers[i][0])
+                        .openPopup()
+                        .addTo(map);
+                }
             }
         </script>
         <% }); %>
@@ -148,16 +145,21 @@
                         popupAnchor: [1, -34],
                         shadowSize: [41, 41]
                     });
-                    var markers = [
-                        ["<b style='font-size:15pt;'> <%=data.country%> </b> <br> <i style='font-size:12pt;'>Death : <%=data.death%>", ('<%=data.lat%>'), ('<%=data.long%>')],
-                    ];
-                    for (var i = 0; i < markers.length; i++) {
-                        marker = L.marker([markers[i][1], markers[i][2]], {
-                                icon: redIcon
-                            })
-                            .bindPopup(markers[i][0])
-                            .openPopup()
-                            .addTo(map2);
+
+                    if ('<%=data.death%>' == '') {
+                        var marker = []
+                    } else {
+                        var markers = [
+                            ["<b style='font-size:15pt;'> <%=data.country%> </b> <br><b style='font-size:12pt;'> <%=data.state%></b><br> <i style='font-size:12pt;'>Death : <%=data.death%> </i>", ('<%=data.lat%>'), ('<%=data.long%>')],
+                        ];
+                        for (var i = 0; i < markers.length; i++) {
+                            marker = L.marker([markers[i][1], markers[i][2]], {
+                                    icon: redIcon
+                                })
+                                .bindPopup(markers[i][0])
+                                .openPopup()
+                                .addTo(map2);
+                        }
                     }
                 </script>
                 <% }); %>
@@ -172,16 +174,20 @@
                                 popupAnchor: [1, -34],
                                 shadowSize: [41, 41]
                             });
-                            var markers = [
-                                ["<b style='font-size:15pt;'> <%=data.country%> </b> <br> <i style='font-size:12pt;'>Recovered : <%=data.recovered%> </i>", ('<%=data.lat%>'), ('<%=data.long%>')],
-                            ];
-                            for (var i = 0; i < markers.length; i++) {
-                                marker = L.marker([markers[i][1], markers[i][2]], {
-                                        icon: greenIcon
-                                    })
-                                    .bindPopup(markers[i][0])
-                                    .openPopup()
-                                    .addTo(map3);
+                            if ('<%=data.recovered%>' == '') {
+                                var marker = []
+                            } else {
+                                var markers = [
+                                    ["<b style='font-size:15pt;'> <%=data.country%> </b> <br><b style='font-size:12pt;'> <%=data.state%></b><br> <i style='font-size:12pt;'>Recovered : <%=data.recovered%> </i>", ('<%=data.lat%>'), ('<%=data.long%>')],
+                                ];
+                                for (var i = 0; i < markers.length; i++) {
+                                    marker = L.marker([markers[i][1], markers[i][2]], {
+                                            icon: greenIcon
+                                        })
+                                        .bindPopup(markers[i][0])
+                                        .openPopup()
+                                        .addTo(map3);
+                                }
                             }
                         </script>
                         <% }); %>

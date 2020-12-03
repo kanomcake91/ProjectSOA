@@ -1,3 +1,49 @@
+function graphSrc(state) {
+    const parseData = JSON.parse(state);
+    var arrayCountry = [];
+    var arrayConfirmed = [];
+    var arrayColor = [randomRGB()];
+    var arrayBorderColor = [arrayColor];
+
+    console.log(parseData.deaths);
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [parseData.country],
+            datasets: [{
+                label: 'Confirmed',
+                data: [parseData.confirmed],
+                backgroundColor: ['rgba(255, 188, 0,0.6)'],
+                borderColor: ['rgba(255, 188, 0,1)'],
+                borderWidth: 2
+            }, {
+                label: 'Death',
+                data: [parseData.deaths],
+                backgroundColor: ['rgba(255, 0, 0,0.6)'],
+                borderColor: ['rgba(255, 0, 0,1)'],
+                borderWidth: 2
+            }, {
+                label: 'Recovered',
+                data: [parseData.recovered],
+                backgroundColor: ['rgba(0, 175, 0,0.6)'],
+                borderColor: ['rgba(0, 175, 0,1)'],
+                borderWidth: 2
+            }],
+
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
+
 function graphConfirmed(confirmed) {
     const parseData = JSON.parse(confirmed);
     var arrayCountry = [];
@@ -94,144 +140,6 @@ function graphRecovered(recovered) {
         type: 'bar',
         data: {
             labels: arrayCountry,
-            datasets: [{
-                label: 'Recovered',
-                data: arrayRecovered,
-                backgroundColor: arrayColor,
-                borderColor: arrayBorderColor,
-                borderWidth: 2
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-}
-
-function chartConfirmed(confirmed) {
-    const parseData = JSON.parse(confirmed);
-    console.log(parseData);
-    var arrayColor = [];
-    var arrayBorderColor = [];
-    var arrayConfirmed = [parseData[0].monday,
-        parseData[0].sunday,
-        parseData[0].saturday,
-        parseData[0].firday,
-        parseData[0].thursday,
-        parseData[0].wednesday,
-        parseData[0].tuesday
-    ];
-
-    for (let index = 0; index < arrayConfirmed.length; index++) {
-        arrayColor[index] = randomRGB();
-        arrayBorderColor[index] = arrayColor[index]
-
-    }
-
-
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['3/23/20', '3/22/20', '3/21/20', '3/20/20', '3/19/20', '3/18/20', '3/17/20'],
-            datasets: [{
-                label: 'Confirmed',
-                data: arrayConfirmed,
-                backgroundColor: arrayColor,
-                borderColor: arrayBorderColor,
-                borderWidth: 2
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-}
-
-function chartDeath(death) {
-    const parseData = JSON.parse(death);
-    console.log(parseData);
-    var arrayColor = [];
-    var arrayBorderColor = [];
-    var arrayDeath = [parseData[0].monday,
-        parseData[0].sunday,
-        parseData[0].saturday,
-        parseData[0].firday,
-        parseData[0].thursday,
-        parseData[0].wednesday,
-        parseData[0].tuesday
-    ];
-
-    for (let index = 0; index < arrayDeath.length; index++) {
-        arrayColor[index] = randomRGB();
-        arrayBorderColor[index] = arrayColor[index]
-
-    }
-
-
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['3/23/20', '3/22/20', '3/21/20', '3/20/20', '3/19/20', '3/18/20', '3/17/20'],
-            datasets: [{
-                label: 'Death',
-                data: arrayDeath,
-                backgroundColor: arrayColor,
-                borderColor: arrayBorderColor,
-                borderWidth: 2
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-}
-
-function chartRecovered(recovered) {
-    const parseData = JSON.parse(recovered);
-    console.log(parseData);
-    var arrayColor = [];
-    var arrayBorderColor = [];
-    var arrayRecovered = [parseData[0].monday,
-        parseData[0].sunday,
-        parseData[0].saturday,
-        parseData[0].firday,
-        parseData[0].thursday,
-        parseData[0].wednesday,
-        parseData[0].tuesday
-    ];
-
-    for (let index = 0; index < arrayRecovered.length; index++) {
-        arrayColor[index] = randomRGB();
-        arrayBorderColor[index] = arrayColor[index]
-
-    }
-
-
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['3/23/20', '3/22/20', '3/21/20', '3/20/20', '3/19/20', '3/18/20', '3/17/20'],
             datasets: [{
                 label: 'Recovered',
                 data: arrayRecovered,

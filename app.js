@@ -5,12 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var confirmedRouter = require('./routes/confirmed');
-var deathRouter = require('./routes/death');
-var recoveredRouter = require('./routes/recovered');
-var graphConfirmed = require('./routes/topConfirmed');
-var graphDeath = require('./routes/topDeath');
-var graphRecovered = require('./routes/topRecovered')
 
 var app = express();
 
@@ -25,12 +19,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/confirmed', confirmedRouter);
-app.use('/death', deathRouter);
-app.use('/recovered', recoveredRouter);
-app.use('/graphConfirmed', graphConfirmed);
-app.use('/graphDeath', graphDeath);
-app.use('/graphRecovered', graphRecovered);
 
 
 // catch 404 and forward to error handler

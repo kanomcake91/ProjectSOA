@@ -23,6 +23,7 @@
     font-weight: bold;
 }
 
-a {
+.countryColor {
     color: #ff6168;
+    font-weight: bold;
 }

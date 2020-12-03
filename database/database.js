@@ -11,7 +11,7 @@ const pool = new Pool({
 
 
 async function getMapConfirmed() {
-    const sql = `SELECT Lat , Long , "Country/Region" as Country , "3/23/20" as Confirmed FROM db_confirmed_csv`;
+    const sql = `SELECT Lat , Long , "Country/Region" as Country ,"Province/State" as State,"3/23/20" as Confirmed FROM db_confirmed_csv`;
     try {
         const data = await pool.query(sql);
         return data;
@@ -22,7 +22,7 @@ async function getMapConfirmed() {
 }
 
 async function getMapDeath() {
-    const sql = `SELECT Lat , Long , "Country/Region" as Country , "3/23/20" as Death FROM db_death_csv`;
+    const sql = `SELECT Lat , Long , "Country/Region" as Country ,"Province/State" as State, "3/23/20" as Death FROM db_death_csv`;
     try {
         const data = await pool.query(sql);
         return data;
@@ -33,7 +33,7 @@ async function getMapDeath() {
 }
 
 async function getMapRecovered() {
-    const sql = `SELECT Lat , Long , "Country/Region" as Country , "3/23/20" as Recovered FROM db_recovered_csv`;
+    const sql = `SELECT Lat , Long , "Country/Region" as Country , "Province/State" as State,"3/23/20" as Recovered FROM db_recovered_csv`;
     try {
         const data = await pool.query(sql);
         return data;
@@ -120,6 +120,47 @@ async function searchRecoveredByCountry(country) {
 
 }
 
+async function searchConfirmedByState(state) {
+    const sql = `SELECT "Country/Region" as Country,"Province/State" as State ,"3/23/20" as Monday , "3/22/20" as Sunday ,"3/21/20" as Saturday , 
+    "3/20/20" as Firday ,"3/19/20" as Thursday , "3/18/20" as Wednesday , "3/17/20" as Tuesday  
+    FROM db_confirmed_csv where "Province/State" = '${state}'`;
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+
+}
+async function searchRecoveredByState(state) {
+    const sql = `SELECT "Country/Region" as Country,"Province/State" as State ,"3/23/20" as Monday , "3/22/20" as Sunday ,"3/21/20" as Saturday , 
+    "3/20/20" as Firday ,"3/19/20" as Thursday , "3/18/20" as Wednesday , "3/17/20" as Tuesday  
+    FROM db_recovered_csv where "Province/State" = '${state}'`;
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+
+}
+
+async function searchDeathByState(state) {
+    const sql = `SELECT "Country/Region" as Country,"Province/State" as State ,"3/23/20" as Monday , "3/22/20" as Sunday ,"3/21/20" as Saturday , 
+    "3/20/20" as Firday ,"3/19/20" as Thursday , "3/18/20" as Wednesday , "3/17/20" as Tuesday  
+    FROM db_death_csv where "Province/State" = '${state}'`;
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+
+}
+
 async function topConfirmed() {
     const sql = `select "Country/Region" as Country , "3/23/20" as Confirmed from db_confirmed_csv order by LENGTH("3/23/20") desc , "3/23/20" desc limit 10`;
     try {
@@ -153,6 +194,47 @@ async function topRecovered() {
     }
 }
 
+const getStatusByCountry = async(country) => {
+    const sql = `select
+    db_confirmed_csv."Country/Region" as Country ,
+    db_confirmed_csv.lat,
+    db_confirmed_csv.long ,
+    db_confirmed_csv."3/22/20" as Confirmed,
+    db_death_csv."3/22/20"as Deaths,
+    db_recovered_csv."3/22/20" as Recovered 
+    from db_confirmed_csv, db_death_csv, db_recovered_csv
+    where db_confirmed_csv."Country/Region" = db_death_csv."Country/Region" 
+    and db_confirmed_csv."Country/Region" = db_recovered_csv."Country/Region" 
+    and db_confirmed_csv."Country/Region" = '${country}'`;
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+}
+
+const getStatusByState = async(state) => {
+    const sql = `select
+    db_confirmed_csv."Province/State" as Country ,
+    db_confirmed_csv.lat,
+    db_confirmed_csv.long ,
+    db_confirmed_csv."3/22/20" as Confirmed,
+    db_death_csv."3/22/20"as Deaths,
+    db_recovered_csv."3/22/20" as Recovered 
+    from db_confirmed_csv, db_death_csv, db_recovered_csv
+    where db_confirmed_csv."Province/State" = db_death_csv."Province/State" 
+    and db_confirmed_csv."Province/State" = db_recovered_csv."Province/State" 
+    and db_confirmed_csv."Province/State" = '${state}'`;
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+}
 
 
 module.exports = {
@@ -167,6 +249,11 @@ module.exports = {
     searchRecoveredByCountry, //
     topConfirmed,
     topDeath,
-    topRecovered
+    topRecovered,
+    getStatusByCountry, //
+    getStatusByState, //
+    searchConfirmedByState, //
+    searchRecoveredByState, //
+    searchDeathByState //
 
 }
