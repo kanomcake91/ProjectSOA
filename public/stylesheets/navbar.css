@@ -1,0 +1,20 @@
+.bg-dark {
+    background-color: #1d1d1d!important;
+}
+
+.bg-color {
+    background-color: #1d1d1d!important;
+}
+
+.active {
+    font-weight: bold;
+}
+
+.nav-link {}
+
+.navbar-dark .navbar-nav .active>.nav-link,
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link.show,
+.navbar-dark .navbar-nav .show>.nav-link {
+    color: #ff6168;
+}

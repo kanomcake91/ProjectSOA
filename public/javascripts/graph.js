@@ -1,9 +1,10 @@
-function graphConfirmed(country) {
-    const parseData = JSON.parse(country);
+function graphConfirmed(confirmed) {
+    const parseData = JSON.parse(confirmed);
     var arrayCountry = [];
     var arrayConfirmed = [];
     var arrayColor = [];
     var arrayBorderColor = [];
+
     for (const key in parseData) {
         arrayCountry[key] = parseData[key].country
         arrayConfirmed[key] = parseData[key].confirmed
@@ -22,7 +23,8 @@ function graphConfirmed(country) {
                 backgroundColor: arrayColor,
                 borderColor: arrayBorderColor,
                 borderWidth: 2
-            }]
+            }],
+
         },
         options: {
             scales: {
@@ -36,8 +38,8 @@ function graphConfirmed(country) {
     });
 }
 
-function graphDeath(country) {
-    const parseData = JSON.parse(country);
+function graphDeath(death) {
+    const parseData = JSON.parse(death);
     var arrayCountry = [];
     var arrayDeath = [];
     var arrayColor = [];
@@ -74,8 +76,8 @@ function graphDeath(country) {
     });
 }
 
-function graphRecovered(country) {
-    const parseData = JSON.parse(country);
+function graphRecovered(recovered) {
+    const parseData = JSON.parse(recovered);
     var arrayCountry = [];
     var arrayRecovered = [];
     var arrayColor = [];
@@ -112,8 +114,8 @@ function graphRecovered(country) {
     });
 }
 
-function chartConfirmed(country) {
-    const parseData = JSON.parse(country);
+function chartConfirmed(confirmed) {
+    const parseData = JSON.parse(confirmed);
     console.log(parseData);
     var arrayColor = [];
     var arrayBorderColor = [];
@@ -158,8 +160,8 @@ function chartConfirmed(country) {
     });
 }
 
-function chartDeath(country) {
-    const parseData = JSON.parse(country);
+function chartDeath(death) {
+    const parseData = JSON.parse(death);
     console.log(parseData);
     var arrayColor = [];
     var arrayBorderColor = [];
@@ -204,8 +206,8 @@ function chartDeath(country) {
     });
 }
 
-function chartRecovered(country) {
-    const parseData = JSON.parse(country);
+function chartRecovered(recovered) {
+    const parseData = JSON.parse(recovered);
     console.log(parseData);
     var arrayColor = [];
     var arrayBorderColor = [];

@@ -3,3 +3,9 @@
 #mapid3 {
     height: 600px;
 }
+
+.btn-warning {
+    color: white;
+    background-color: #ffbc00;
+    border-color: #ffbc00;
+}

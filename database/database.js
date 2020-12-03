@@ -1,7 +1,6 @@
 const { Pool } = require('pg')
 
 const pool = new Pool({
-
     host: 'localhost',
     database: 'postgres',
     user: 'postgres',
@@ -12,21 +11,36 @@ const pool = new Pool({
 
 
 async function getMapConfirmed() {
-    const lat = `SELECT Lat , Long , "Country/Region" as Country , "3/23/20" as Confirmed FROM db_confirmed_csv`;
-    const data = await pool.query(lat);
-    return data;
+    const sql = `SELECT Lat , Long , "Country/Region" as Country , "3/23/20" as Confirmed FROM db_confirmed_csv`;
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
 }
 
 async function getMapDeath() {
-    const lat = `SELECT Lat , Long , "Country/Region" as Country , "3/23/20" as Death FROM db_death_csv`;
-    const data = await pool.query(lat);
-    return data;
+    const sql = `SELECT Lat , Long , "Country/Region" as Country , "3/23/20" as Death FROM db_death_csv`;
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
 }
 
 async function getMapRecovered() {
-    const lat = `SELECT Lat , Long , "Country/Region" as Country , "3/23/20" as Recovered FROM db_recovered_csv`;
-    const data = await pool.query(lat);
-    return data;
+    const sql = `SELECT Lat , Long , "Country/Region" as Country , "3/23/20" as Recovered FROM db_recovered_csv`;
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
 }
 
 async function searchConfirmed() {
@@ -38,7 +52,6 @@ async function searchConfirmed() {
         console.log(err);
         return null;
     }
-
 }
 
 async function searchDeath() {
@@ -109,20 +122,35 @@ async function searchRecoveredByCountry(country) {
 
 async function topConfirmed() {
     const sql = `select "Country/Region" as Country , "3/23/20" as Confirmed from db_confirmed_csv order by LENGTH("3/23/20") desc , "3/23/20" desc limit 10`;
-    const data = await pool.query(sql);
-    return data;
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
 }
 
 async function topDeath() {
     const sql = `select "Country/Region" as Country , "3/23/20" as Death from db_death_csv order by LENGTH("3/23/20") desc , "3/23/20" desc limit 10`;
-    const data = await pool.query(sql);
-    return data;
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
 }
 
 async function topRecovered() {
     const sql = `select "Country/Region" as Country , "3/23/20" as Recovered from db_recovered_csv order by LENGTH("3/23/20") desc , "3/23/20" desc limit 10`;
-    const data = await pool.query(sql);
-    return data;
+    try {
+        const data = await pool.query(sql);
+        return data;
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
 }
 
 
